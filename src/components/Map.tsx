@@ -37,17 +37,9 @@ const pulseCSS = `
   box-shadow: 0 2px 8px rgba(196,101,58,0.5);
   animation: pulse-dot 2s ease-in-out infinite;
 }
-/* Watercolor / parchment map styling */
+/* Illustrated parchment map styling */
 .illustrated-map .leaflet-tile-pane {
-  filter: saturate(0.25) sepia(0.35) brightness(1.08) contrast(0.85);
-}
-.illustrated-map .leaflet-tile-pane::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(237, 231, 219, 0.15);
-  pointer-events: none;
-  z-index: 1;
+  filter: saturate(0.15) sepia(0.45) brightness(1.1) contrast(0.8) hue-rotate(-5deg);
 }
 .map-label {
   font-family: 'DM Serif Display', Georgia, serif;
@@ -137,16 +129,10 @@ export default function TripMap() {
     // Add illustrated class
     mapRef.current.classList.add("illustrated-map");
 
-    // Stamen Watercolor tiles — painterly, illustrated feel
+    // ESRI topo tiles with CSS filters for illustrated/parchment feel
     L.tileLayer(
-      "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg",
-      { maxZoom: 16, attribution: "Stamen / Stadia Maps" }
-    ).addTo(map);
-
-    // Add a labels-only layer on top for place names
-    L.tileLayer(
-      "https://tiles.stadiamaps.com/tiles/stamen_terrain_labels/{z}/{x}/{y}.png",
-      { maxZoom: 16, opacity: 0.45 }
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+      { maxZoom: 18, attribution: "Esri" }
     ).addTo(map);
 
     const status = getTripStatus();
