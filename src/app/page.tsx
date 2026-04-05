@@ -5,6 +5,7 @@ import Timeline from "@/components/Timeline";
 import Updates from "@/components/Updates";
 import Hero from "@/components/Hero";
 import SectionReveal from "@/components/SectionReveal";
+import LatestDispatch from "@/components/LatestDispatch";
 
 const TripMap = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -32,6 +33,9 @@ export default function Home() {
           ))}
         </div>
       </nav>
+
+      {/* Latest Dispatch */}
+      <LatestDispatch />
 
       {/* Map Section */}
       <section id="route" className="max-w-5xl mx-auto px-5 py-16 md:py-20">
