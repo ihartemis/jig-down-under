@@ -39,7 +39,7 @@ const pulseCSS = `
 }
 /* Illustrated parchment map styling */
 .illustrated-map .leaflet-tile-pane {
-  filter: saturate(0.15) sepia(0.45) brightness(1.1) contrast(0.8) hue-rotate(-5deg);
+  filter: saturate(0.35) sepia(0.25) brightness(1.05) contrast(0.95) hue-rotate(-5deg);
 }
 .map-label {
   font-family: 'DM Serif Display', Georgia, serif;
