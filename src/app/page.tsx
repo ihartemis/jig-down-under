@@ -1,65 +1,117 @@
-import Image from "next/image";
+"use client";
+
+import dynamic from "next/dynamic";
+import Timeline from "@/components/Timeline";
+import Updates from "@/components/Updates";
+import Hero from "@/components/Hero";
+import SectionReveal from "@/components/SectionReveal";
+
+const TripMap = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <main className="min-h-screen overflow-x-hidden">
+      {/* Hero */}
+      <Hero />
+
+      {/* Nav */}
+      <nav className="sticky top-0 z-50 bg-cream/80 backdrop-blur-xl border-b border-stone-200/40">
+        <div className="max-w-4xl mx-auto px-5 flex gap-6 text-sm font-medium overflow-x-auto">
+          {[
+            { href: "#route", label: "Route" },
+            { href: "#itinerary", label: "Itinerary" },
+            { href: "#dispatches", label: "Dispatches" },
+          ].map((link) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              key={link.href}
+              href={link.href}
+              className="py-3 border-b-2 border-transparent hover:border-bush text-stone-400 hover:text-charcoal transition-all duration-300 whitespace-nowrap"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      {/* Map Section */}
+      <section id="route" className="max-w-5xl mx-auto px-5 py-16 md:py-20">
+        <SectionReveal>
+          <h2 className="font-display text-3xl md:text-5xl mb-2 text-charcoal">
+            The Route
+          </h2>
+          <p className="text-stone-400 mb-8 text-base">
+            Nelson &rarr; Golden Bay &rarr; West Coast &rarr; Arthur&apos;s Pass
+            &rarr; Christchurch &rarr; Melbourne
+          </p>
+        </SectionReveal>
+
+        <SectionReveal delay={0.2}>
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-stone-200/40 h-[450px] md:h-[550px] ring-1 ring-black/5">
+            <TripMap />
+          </div>
+
+          {/* Route legend */}
+          <div className="flex flex-wrap gap-5 mt-5 text-xs text-stone-400">
+            {[
+              { color: "bg-teal", label: "Nelson & Golden Bay" },
+              { color: "bg-bush", label: "West Coast" },
+              { color: "bg-sienna", label: "Arthur's Pass" },
+              { color: "bg-plum", label: "Christchurch" },
+            ].map((item) => (
+              <span key={item.label} className="flex items-center gap-1.5">
+                <span className={`w-5 h-0.5 ${item.color} rounded`} />
+                {item.label}
+              </span>
+            ))}
+          </div>
+        </SectionReveal>
+      </section>
+
+      {/* Itinerary Section */}
+      <section
+        id="itinerary"
+        className="max-w-3xl mx-auto px-5 py-16 md:py-20"
+      >
+        <SectionReveal>
+          <h2 className="font-display text-3xl md:text-5xl mb-2 text-charcoal">
+            Day by Day
+          </h2>
+          <p className="text-stone-400 mb-10 text-base">
+            Two weeks, one toddler, zero regrets (hopefully).
+          </p>
+        </SectionReveal>
+        <Timeline />
+      </section>
+
+      {/* Dispatches Section */}
+      <section
+        id="dispatches"
+        className="max-w-3xl mx-auto px-5 py-16 md:py-20"
+      >
+        <SectionReveal>
+          <h2 className="font-display text-3xl md:text-5xl mb-2 text-charcoal">
+            Dispatches
+          </h2>
+          <p className="text-stone-400 mb-10 text-base">
+            Notes from the field. Updated when we have wifi (so, sporadically).
+          </p>
+        </SectionReveal>
+        <Updates />
+      </section>
+
+      {/* Footer */}
+      <footer className="relative bg-bush text-cream/50 py-14 text-center overflow-hidden">
+        <div className="topo-pattern absolute inset-0 opacity-50" />
+        <div className="relative z-10">
+          <p className="font-display text-2xl text-cream/80 mb-2">
+            Made with love by Ingrid
+          </p>
+          <p className="text-sm">
+            Ingrid, Julian & Griffin — SLC &rarr; NZ &rarr; Melbourne &rarr;
+            Home
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+    </main>
   );
 }
